@@ -64,9 +64,10 @@
             this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.button_S1PDB = new System.Windows.Forms.Button();
-            this.button_S1PRI = new System.Windows.Forms.Button();
             this.button_hold = new System.Windows.Forms.Button();
+            this.button_S1PRI = new System.Windows.Forms.Button();
             this.textBox_log = new System.Windows.Forms.TextBox();
+            this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -288,6 +289,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.checkBox7);
             this.groupBox4.Controls.Add(this.textBox_MK6);
             this.groupBox4.Controls.Add(this.checkBox6);
             this.groupBox4.Controls.Add(this.checkBox1);
@@ -444,16 +446,6 @@
             this.button_S1PDB.UseVisualStyleBackColor = true;
             this.button_S1PDB.Click += new System.EventHandler(this.button_S1PDB_Click);
             // 
-            // button_S1PRI
-            // 
-            this.button_S1PRI.Location = new System.Drawing.Point(6, 18);
-            this.button_S1PRI.Name = "button_S1PRI";
-            this.button_S1PRI.Size = new System.Drawing.Size(75, 23);
-            this.button_S1PRI.TabIndex = 0;
-            this.button_S1PRI.Text = "S1P RI";
-            this.button_S1PRI.UseVisualStyleBackColor = true;
-            this.button_S1PRI.Click += new System.EventHandler(this.button4_Click);
-            // 
             // button_hold
             // 
             this.button_hold.Location = new System.Drawing.Point(168, 18);
@@ -464,6 +456,16 @@
             this.button_hold.UseVisualStyleBackColor = true;
             this.button_hold.Click += new System.EventHandler(this.button_hold_Click);
             // 
+            // button_S1PRI
+            // 
+            this.button_S1PRI.Location = new System.Drawing.Point(6, 18);
+            this.button_S1PRI.Name = "button_S1PRI";
+            this.button_S1PRI.Size = new System.Drawing.Size(75, 23);
+            this.button_S1PRI.TabIndex = 0;
+            this.button_S1PRI.Text = "S1P RI";
+            this.button_S1PRI.UseVisualStyleBackColor = true;
+            this.button_S1PRI.Click += new System.EventHandler(this.button4_Click);
+            // 
             // textBox_log
             // 
             this.textBox_log.Location = new System.Drawing.Point(18, 154);
@@ -471,6 +473,17 @@
             this.textBox_log.Size = new System.Drawing.Size(181, 19);
             this.textBox_log.TabIndex = 9;
             this.textBox_log.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // checkBox7
+            // 
+            this.checkBox7.AutoSize = true;
+            this.checkBox7.Location = new System.Drawing.Point(482, 21);
+            this.checkBox7.Name = "checkBox7";
+            this.checkBox7.Size = new System.Drawing.Size(30, 16);
+            this.checkBox7.TabIndex = 18;
+            this.checkBox7.Text = "7";
+            this.checkBox7.UseVisualStyleBackColor = true;
+            this.checkBox7.CheckedChanged += new System.EventHandler(this.checkBox7_CheckedChanged);
             // 
             // Form1
             // 
@@ -541,6 +554,7 @@
         private System.Windows.Forms.Button button_S1PRI;
         private System.Windows.Forms.Button button_hold;
         private System.Windows.Forms.TextBox textBox_log;
+        private System.Windows.Forms.CheckBox checkBox7;
     }
 }
 

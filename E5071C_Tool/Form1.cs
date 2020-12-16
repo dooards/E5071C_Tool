@@ -902,6 +902,37 @@ namespace E5071C_Tool
 
             }
         }
+
+        private void checkBox7_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (init == true)
+                {
+                    if (checkBox7.Checked == true)
+                    {
+                        var session = (Ivi.Visa.IMessageBasedSession)
+                        Ivi.Visa.GlobalResourceManager.Open(textBox_VISA.Text);
+                        session.FormattedIO.WriteLine(":CALC1:MARK7 ON");
+                        session.Dispose();
+                        session = null;
+
+                    }
+                    else if (checkBox7.Checked == false)
+                    {
+                        var session = (Ivi.Visa.IMessageBasedSession)
+                        Ivi.Visa.GlobalResourceManager.Open(textBox_VISA.Text);
+                        session.FormattedIO.WriteLine(":CALC1:MARK7 OFF");
+                        session.Dispose();
+                        session = null;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+        }
     }
     
 }
