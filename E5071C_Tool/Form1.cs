@@ -17,6 +17,9 @@ namespace E5071C_Tool
     {
         string E5071C;
         bool init;
+        string[] ReadResults;
+        double num;
+
 
         private ResourceManager RM = new ResourceManager();
         private FormattedIO488 INST = new FormattedIO488();
@@ -927,6 +930,102 @@ namespace E5071C_Tool
                         session = null;
                     }
                 }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void button_store_Click(object sender, EventArgs e)
+        {
+            string resultMK1 = null;
+            string resultMK2 = null;
+            string resultMK3 = null;
+            string TEXTDATA = null;
+
+            try
+            {
+
+
+                for (int i = 1; i < 4; i++)
+                {
+
+                    string loop = i.ToString();
+
+                    INST.IO = (IMessage)RM.Open(E5071C, AccessMode.NO_LOCK, 2000, "");
+                    INST.IO.Timeout = 5000;
+
+                    INST.IO.Clear();
+                    INST.WriteString(":SENS1: FREQ:SPAN " + "0E6", true);
+
+                    switch (i)
+                    {
+                        case 1:
+                            if (checkBox1.Checked == true)
+                            {
+                                INST.WriteString(":SENS1: FREQ:CENT " + textBox_MK1.Text + "E6", true);
+                                INST.WriteString(":CALC1:MARK1:X " + textBox_MK1.Text + "E6", true);
+                                INST.WriteString(":CALC1:MARK1:Y?");
+                                ReadResults = INST.ReadString().Split(',');
+                                num = double.Parse(ReadResults[0], NumberStyles.Float);
+                                resultMK1 = num.ToString();
+                            }
+
+                            break;
+
+                        case 2:
+                            if (checkBox2.Checked == true)
+                            {
+                                INST.WriteString(":SENS1: FREQ:CENT " + textBox_MK1.Text + "E6", true);
+                                INST.WriteString(":CALC1:MARK1:X " + textBox_MK1.Text + "E6", true);
+                                INST.WriteString(":CALC1:MARK1:Y?");
+                                ReadResults = INST.ReadString().Split(',');
+                                num = double.Parse(ReadResults[0], NumberStyles.Float);
+                                resultMK2 = num.ToString();
+                            }
+
+                            break;
+
+                        case 3:
+                            if (checkBox3.Checked == true)
+                            {
+                                INST.WriteString(":SENS1: FREQ:CENT " + textBox_MK1.Text + "E6", true);
+                                INST.WriteString(":CALC1:MARK1:X " + textBox_MK1.Text + "E6", true);
+                                INST.WriteString(":CALC1:MARK1:Y?");
+                                ReadResults = INST.ReadString().Split(',');
+                                num = double.Parse(ReadResults[0], NumberStyles.Float);
+                                resultMK3 = num.ToString();
+                            }
+
+                            break;
+
+
+
+                    }
+
+                    string[] results = { textBox_MK1.Text, resultMK1, textBox_MK2.Text, resultMK2, textBox_MK3.Text, resultMK3 };
+
+                    StreamWriter prow = new StreamWriter("C:\\pattern.csv", true, Encoding.Default);
+                    for (int i = 0; i < results.Length; i++)
+                    {
+                        if (i == 0)
+                        {
+                            TEXTDATA = results[i] + ",";
+                        }
+                        else
+                        {
+                            TEXTDATA = TEXTDATA + results[i] + ",";
+                        }
+
+                    }
+                    prow.WriteLine(TEXTDATA);
+                    prow.Close();
+
+
+                }
+
+
             }
             catch
             {

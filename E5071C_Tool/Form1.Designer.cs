@@ -50,6 +50,7 @@
             this.button_end = new System.Windows.Forms.Button();
             this.textBox_VISA = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.textBox_MK6 = new System.Windows.Forms.TextBox();
             this.checkBox6 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -67,7 +68,7 @@
             this.button_hold = new System.Windows.Forms.Button();
             this.button_S1PRI = new System.Windows.Forms.Button();
             this.textBox_log = new System.Windows.Forms.TextBox();
-            this.checkBox7 = new System.Windows.Forms.CheckBox();
+            this.button_store = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -309,6 +310,17 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Marker";
             // 
+            // checkBox7
+            // 
+            this.checkBox7.AutoSize = true;
+            this.checkBox7.Location = new System.Drawing.Point(482, 21);
+            this.checkBox7.Name = "checkBox7";
+            this.checkBox7.Size = new System.Drawing.Size(30, 16);
+            this.checkBox7.TabIndex = 18;
+            this.checkBox7.Text = "7";
+            this.checkBox7.UseVisualStyleBackColor = true;
+            this.checkBox7.CheckedChanged += new System.EventHandler(this.checkBox7_CheckedChanged);
+            // 
             // textBox_MK6
             // 
             this.textBox_MK6.Location = new System.Drawing.Point(395, 18);
@@ -470,26 +482,26 @@
             // 
             this.textBox_log.Location = new System.Drawing.Point(18, 154);
             this.textBox_log.Name = "textBox_log";
-            this.textBox_log.Size = new System.Drawing.Size(181, 19);
+            this.textBox_log.Size = new System.Drawing.Size(100, 19);
             this.textBox_log.TabIndex = 9;
             this.textBox_log.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // checkBox7
+            // button_store
             // 
-            this.checkBox7.AutoSize = true;
-            this.checkBox7.Location = new System.Drawing.Point(482, 21);
-            this.checkBox7.Name = "checkBox7";
-            this.checkBox7.Size = new System.Drawing.Size(30, 16);
-            this.checkBox7.TabIndex = 18;
-            this.checkBox7.Text = "7";
-            this.checkBox7.UseVisualStyleBackColor = true;
-            this.checkBox7.CheckedChanged += new System.EventHandler(this.checkBox7_CheckedChanged);
+            this.button_store.Location = new System.Drawing.Point(124, 154);
+            this.button_store.Name = "button_store";
+            this.button_store.Size = new System.Drawing.Size(75, 23);
+            this.button_store.TabIndex = 10;
+            this.button_store.Text = "button1";
+            this.button_store.UseVisualStyleBackColor = true;
+            this.button_store.Click += new System.EventHandler(this.button_store_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(553, 282);
+            this.Controls.Add(this.button_store);
             this.Controls.Add(this.textBox_log);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -555,6 +567,7 @@
         private System.Windows.Forms.Button button_hold;
         private System.Windows.Forms.TextBox textBox_log;
         private System.Windows.Forms.CheckBox checkBox7;
+        private System.Windows.Forms.Button button_store;
     }
 }
 
