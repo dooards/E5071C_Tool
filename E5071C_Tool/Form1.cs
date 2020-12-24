@@ -24,7 +24,7 @@ namespace E5071C_Tool
         private ResourceManager RM = new ResourceManager();
         private FormattedIO488 INST = new FormattedIO488();
 
-        
+
         public void initmk()
         {
             try
@@ -32,7 +32,7 @@ namespace E5071C_Tool
                 var session = (Ivi.Visa.IMessageBasedSession)
                 Ivi.Visa.GlobalResourceManager.Open(E5071C);
 
-                for(int i = 1; i < 7; i++)
+                for (int i = 1; i < 7; i++)
                 {
                     string loop = i.ToString();
 
@@ -42,11 +42,11 @@ namespace E5071C_Tool
 
                     if (readString == "1")
                     {
-                        session.FormattedIO.WriteLine(":CALC1"+":MARK"+loop+":X?");
+                        session.FormattedIO.WriteLine(":CALC1" + ":MARK" + loop + ":X?");
                         double num = double.Parse(session.FormattedIO.ReadLine(), NumberStyles.Float);
                         num = num / 1000000;
 
-                        switch (i){
+                        switch (i) {
 
                             case 1:
                                 textBox_MK1.Text = num.ToString();
@@ -80,11 +80,11 @@ namespace E5071C_Tool
 
 
                         }
-                        
+
 
                     }
 
-                    
+
                 }
                 init = true;
                 session.Dispose();
@@ -112,7 +112,7 @@ namespace E5071C_Tool
                 INST.IO = (IMessage)RM.Open(E5071C, AccessMode.NO_LOCK, 2000, "");
                 INST.IO.Timeout = 5000;
                 INST.IO.Clear();
-                
+
                 INST.WriteString(STAR, true);
                 num = double.Parse(INST.ReadString(), NumberStyles.Float);
                 num = num / 1000000;
@@ -162,7 +162,7 @@ namespace E5071C_Tool
             int f1 = int.Parse(textBox_start.Text);
             int f2 = int.Parse(textBox_stop.Text);
 
-            if(f1 > f2)
+            if (f1 > f2)
             {
                 MessageBox.Show("START > STOP");
                 initfreq();
@@ -178,7 +178,7 @@ namespace E5071C_Tool
                 INST.IO.Clear();
                 INST.WriteString(STAR, true);
 
-                
+
 
             }
             catch
@@ -218,7 +218,7 @@ namespace E5071C_Tool
                 INST.IO.Clear();
                 INST.WriteString(STOP, true);
 
-              
+
 
             }
             catch
@@ -247,7 +247,7 @@ namespace E5071C_Tool
                 INST.IO.Clear();
                 INST.WriteString(CENT, true);
 
-              
+
 
             }
             catch
@@ -296,7 +296,7 @@ namespace E5071C_Tool
 
         private void button_recall_Click(object sender, EventArgs e)
         {
-            
+
             try
             {
                 int num = Convert.ToInt32(textBox_num.Text);
@@ -331,10 +331,10 @@ namespace E5071C_Tool
             DialogResult result = MessageBox.Show("上書き保存しますか", "STATE",
                 MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
 
-            if(result == DialogResult.Yes)
+            if (result == DialogResult.Yes)
             {
                 int num = Convert.ToInt32(textBox_num.Text);
-                string SAVE = ":MMEM:STOR " + "\"D:\\State" + String.Format("{0:00}",num) + ".sta\"";
+                string SAVE = ":MMEM:STOR " + "\"D:\\State" + String.Format("{0:00}", num) + ".sta\"";
                 try
                 {
                     INST.IO = (IMessage)RM.Open(E5071C, AccessMode.NO_LOCK, 2000, "");
@@ -382,14 +382,14 @@ namespace E5071C_Tool
                 SFD.FilterIndex = 1;
                 SFD.RestoreDirectory = true;
 
-                if(SFD.ShowDialog() == DialogResult.OK)
+                if (SFD.ShowDialog() == DialogResult.OK)
                 {
-                   FileStream fs = new FileStream(SFD.FileName, FileMode.Create, FileAccess.Write);
+                    FileStream fs = new FileStream(SFD.FileName, FileMode.Create, FileAccess.Write);
                     //バイト型配列の内容をすべて書き込む
-                   fs.Write(data, 0, data.Length);
-                   //閉じる
-                   fs.Close();
-                }                
+                    fs.Write(data, 0, data.Length);
+                    //閉じる
+                    fs.Close();
+                }
 
             }
             catch
@@ -444,7 +444,7 @@ namespace E5071C_Tool
 
         private void button_end_Click(object sender, EventArgs e)
         {
-            
+
             System.Runtime.InteropServices.Marshal.ReleaseComObject(INST);
             System.Runtime.InteropServices.Marshal.ReleaseComObject(RM);
             INST = null;
@@ -454,7 +454,7 @@ namespace E5071C_Tool
 
         private void button_open_Click(object sender, EventArgs e)
         {
-            
+
             string OPEN = ":SENS1:CORR:COLL:OPEN 1";
             try
             {
@@ -541,7 +541,7 @@ namespace E5071C_Tool
 
                 INST.IO.Clear();
                 INST.WriteString(SEL, true);
-                INST.WriteString(DONE,true);
+                INST.WriteString(DONE, true);
 
             }
             catch
@@ -631,10 +631,10 @@ namespace E5071C_Tool
                 INST.IO.Timeout = 5000;
 
                 INST.IO.Clear();
-                INST.WriteString(SNP,true);
-                INST.WriteString(STOR,true);
-                INST.WriteString(SAVE,true);
-                INST.WriteString(TRAN,true);
+                INST.WriteString(SNP, true);
+                INST.WriteString(STOR, true);
+                INST.WriteString(SAVE, true);
+                INST.WriteString(TRAN, true);
 
                 data = INST.ReadIEEEBlock(Ivi.Visa.Interop.IEEEBinaryType.BinaryType_UI1);
 
@@ -659,11 +659,11 @@ namespace E5071C_Tool
             }
             finally
             {
-                if(INST.IO != null)
+                if (INST.IO != null)
                 {
                     INST.IO.Close();
                 }
-               
+
 
             }
         }
@@ -699,7 +699,7 @@ namespace E5071C_Tool
             }
             catch
             {
-               
+
             }
         }
 
@@ -846,24 +846,24 @@ namespace E5071C_Tool
         private void button_hold_Click(object sender, EventArgs e)
         {
             string TRIGON = ":INIT1:CONT ON";
-            string TRIGOFF =":INIT1:CONT OFF";
-            
+            string TRIGOFF = ":INIT1:CONT OFF";
+
             bool FLG = false;
 
             try
             {
-                
+
 
                 if (button_hold.Text == "Contiuous")
                 {
-                    
+
                     button_hold.Text = "Hold";
                     textBox_log.ResetText();
                     FLG = true;
                 }
                 else if (button_hold.Text == "Hold")
                 {
-                    
+
                     button_hold.Text = "Contiuous";
                     FLG = false;
                 }
@@ -872,7 +872,7 @@ namespace E5071C_Tool
                 INST.IO.Timeout = 5000;
 
                 INST.IO.Clear();
-                if(FLG == true)
+                if (FLG == true)
                 {
                     INST.WriteString(TRIGON, true);
                 }
@@ -881,13 +881,13 @@ namespace E5071C_Tool
                     INST.WriteString(TRIGOFF, true);
                 }
 
-                if(FLG == false)
+                if (FLG == false)
                 {
                     INST.WriteString(":CALC1:MARK1:Y?");
                     string[] ReadResults = INST.ReadString().Split(',');
 
                     double num = double.Parse(ReadResults[0], NumberStyles.Float);
-                    
+
                     textBox_log.Text = num.ToString();
                 }
 
@@ -957,14 +957,15 @@ namespace E5071C_Tool
                     INST.IO.Timeout = 5000;
 
                     INST.IO.Clear();
-                    INST.WriteString(":SENS1: FREQ:SPAN " + "0E6", true);
+                    INST.WriteString(":SENS1:FREQ:SPAN " + "0E6", true);
 
                     switch (i)
                     {
                         case 1:
                             if (checkBox1.Checked == true)
                             {
-                                INST.WriteString(":SENS1: FREQ:CENT " + textBox_MK1.Text + "E6", true);
+                                System.Threading.Thread.Sleep(100);
+                                INST.WriteString(":SENS1:FREQ:CENT " + textBox_MK1.Text + "E6", true);
                                 INST.WriteString(":CALC1:MARK1:X " + textBox_MK1.Text + "E6", true);
                                 INST.WriteString(":CALC1:MARK1:Y?");
                                 ReadResults = INST.ReadString().Split(',');
@@ -977,9 +978,10 @@ namespace E5071C_Tool
                         case 2:
                             if (checkBox2.Checked == true)
                             {
-                                INST.WriteString(":SENS1: FREQ:CENT " + textBox_MK1.Text + "E6", true);
-                                INST.WriteString(":CALC1:MARK1:X " + textBox_MK1.Text + "E6", true);
-                                INST.WriteString(":CALC1:MARK1:Y?");
+                                System.Threading.Thread.Sleep(100);
+                                INST.WriteString(":SENS1:FREQ:CENT " + textBox_MK2.Text + "E6", true);
+                                INST.WriteString(":CALC1:MARK2:X " + textBox_MK2.Text + "E6", true);
+                                INST.WriteString(":CALC1:MARK2:Y?");
                                 ReadResults = INST.ReadString().Split(',');
                                 num = double.Parse(ReadResults[0], NumberStyles.Float);
                                 resultMK2 = num.ToString();
@@ -990,9 +992,10 @@ namespace E5071C_Tool
                         case 3:
                             if (checkBox3.Checked == true)
                             {
-                                INST.WriteString(":SENS1: FREQ:CENT " + textBox_MK1.Text + "E6", true);
-                                INST.WriteString(":CALC1:MARK1:X " + textBox_MK1.Text + "E6", true);
-                                INST.WriteString(":CALC1:MARK1:Y?");
+                                System.Threading.Thread.Sleep(100);
+                                INST.WriteString(":SENS1:FREQ:CENT " + textBox_MK3.Text + "E6", true);
+                                INST.WriteString(":CALC1:MARK3:X " + textBox_MK3.Text + "E6", true);
+                                INST.WriteString(":CALC1:MARK3:Y?");
                                 ReadResults = INST.ReadString().Split(',');
                                 num = double.Parse(ReadResults[0], NumberStyles.Float);
                                 resultMK3 = num.ToString();
@@ -1004,34 +1007,36 @@ namespace E5071C_Tool
 
                     }
 
-                    string[] results = { textBox_MK1.Text, resultMK1, textBox_MK2.Text, resultMK2, textBox_MK3.Text, resultMK3 };
-
-                    StreamWriter prow = new StreamWriter("C:\\pattern.csv", true, Encoding.Default);
-                    for (int i = 0; i < results.Length; i++)
-                    {
-                        if (i == 0)
-                        {
-                            TEXTDATA = results[i] + ",";
-                        }
-                        else
-                        {
-                            TEXTDATA = TEXTDATA + results[i] + ",";
-                        }
-
-                    }
-                    prow.WriteLine(TEXTDATA);
-                    prow.Close();
-
-
                 }
-
-
             }
+
             catch
             {
 
             }
+
+
+            string[] results = { textBox_MK1.Text, resultMK1, textBox_MK2.Text, resultMK2, textBox_MK3.Text, resultMK3 };
+
+            StreamWriter prow = new StreamWriter("C:\\TEST\\pattern.csv", true, Encoding.Default);
+            for (int k = 0; k < results.Length; k++)
+            {
+                if (k == 0)
+                {
+                    TEXTDATA = results[k] + ",";
+                }
+                else
+                {
+                    TEXTDATA = TEXTDATA + results[k] + ",";
+                }
+
+            }
+            prow.WriteLine(TEXTDATA);
+            prow.Close();
+
+
         }
+
     }
-    
+
 }
