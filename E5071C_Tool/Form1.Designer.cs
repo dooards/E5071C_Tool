@@ -69,6 +69,7 @@
             this.button_S1PRI = new System.Windows.Forms.Button();
             this.textBox_log = new System.Windows.Forms.TextBox();
             this.button_store = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -496,11 +497,22 @@
             this.button_store.UseVisualStyleBackColor = true;
             this.button_store.Click += new System.EventHandler(this.button_store_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(572, 28);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(553, 282);
+            this.ClientSize = new System.Drawing.Size(671, 282);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.button_store);
             this.Controls.Add(this.textBox_log);
             this.Controls.Add(this.groupBox5);
@@ -568,6 +580,7 @@
         private System.Windows.Forms.TextBox textBox_log;
         private System.Windows.Forms.CheckBox checkBox7;
         private System.Windows.Forms.Button button_store;
+        private System.Windows.Forms.Button button1;
     }
 }
 

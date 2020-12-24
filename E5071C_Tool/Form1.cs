@@ -23,8 +23,8 @@ namespace E5071C_Tool
 
         private ResourceManager RM = new ResourceManager();
         private FormattedIO488 INST = new FormattedIO488();
+        private FormattedIO488 INST_VNA = new FormattedIO488();
 
-        
         public void initmk()
         {
             try
@@ -1007,15 +1007,15 @@ namespace E5071C_Tool
                     string[] results = { textBox_MK1.Text, resultMK1, textBox_MK2.Text, resultMK2, textBox_MK3.Text, resultMK3 };
 
                     StreamWriter prow = new StreamWriter("C:\\pattern.csv", true, Encoding.Default);
-                    for (int i = 0; i < results.Length; i++)
+                    for (int j = 0; j < results.Length; j++)
                     {
-                        if (i == 0)
+                        if (j == 0)
                         {
-                            TEXTDATA = results[i] + ",";
+                            TEXTDATA = results[j] + ",";
                         }
                         else
                         {
-                            TEXTDATA = TEXTDATA + results[i] + ",";
+                            TEXTDATA = TEXTDATA + results[j] + ",";
                         }
 
                     }
@@ -1031,6 +1031,23 @@ namespace E5071C_Tool
             {
 
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            INST_VNA.IO = (IMessage)RM.Open(E5071C, AccessMode.NO_LOCK, 2000, "");
+            INST_VNA.IO.Timeout = 5000;
+
+            INST_VNA.IO.Clear();
+            INST_VNA.WriteString(":SENS1: FREQ:SPAN " + "0E6", true);
+            INST_VNA.WriteString(":SENS1:FREQ:CENT " + textBox_MK1.Text + "E6", true);
+            INST_VNA.WriteString(":CALC1:MARK1 ON");
+            INST_VNA.WriteString(":CALC1: MARK1:X " + textBox_MK1.Text + "E6");
+            INST_VNA.WriteString(":CALC1:MARK1:Y?");
+            String[] ReadMK = INST_VNA.ReadString().Split(',');
+            double num = double.Parse(ReadMK[0], NumberStyles.Float);
+            string resultMK = num.ToString();
         }
     }
     
