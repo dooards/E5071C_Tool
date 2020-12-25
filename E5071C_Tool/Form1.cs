@@ -949,15 +949,24 @@ namespace E5071C_Tool
                 INST.IO.Timeout = 5000;
 
                 INST.IO.Clear();
-                INST.WriteString(":SENS1:FREQ:SPAN " + "0E6", true);
+                INST.WriteString(":SENS1:FREQ:SPAN " + "0E6");
+                INST.WriteString(":SENS1:SWE:POIN " + "2");
+
                 //INST.WriteString(":INIT1:CONT OFF");
-                System.Threading.Thread.Sleep(100);
+                
+
+                for(int o = 1; o < 8; o++)
+                {
+                    INST.WriteString(":CALC1:MARK" + o +  " OFF");
+                    System.Threading.Thread.Sleep(25);
+                }
+                
 
                 //ここまではあらかじめ設定しておくのがよい
 
                 DateTime dt = DateTime.Now;
 
-                for(int d = 0; d < 360; d++)
+                for(int d = 0; d < 10; d++)
                 {
                     for (int i = 0; i < 3; i++)
                     {
@@ -1044,8 +1053,8 @@ namespace E5071C_Tool
                         if (MEAS != null)
                         {
                             INST.WriteString(":SENS1:FREQ:CENT " + MEAS + "E6");
-                            System.Threading.Thread.Sleep(100);
-                            INST.WriteString(":CALC1:MARK1:X " + "0" + "E6");
+                            System.Threading.Thread.Sleep(80);
+                            //INST.WriteString(":CALC1:MARK1:X " + "0" + "E6");
                             //INST.WriteString(":INIT1");
 
 
@@ -1067,7 +1076,7 @@ namespace E5071C_Tool
                 Console.WriteLine(dte - dt);
 
                 StreamWriter prow = new StreamWriter("C:\\TEST\\pattern.csv", true, Encoding.Default);
-                for(int g = 0; g < 360; g++)
+                for(int g = 0; g < 10; g++)
                 {
                     for (int k = 0; k < 12; k++)
                     {
