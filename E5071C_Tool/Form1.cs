@@ -939,76 +939,159 @@ namespace E5071C_Tool
 
         private void button_store_Click(object sender, EventArgs e)
         {
-            string resultMK1 = null;
-            string resultMK2 = null;
-            string resultMK3 = null;
+            string OPC;
             string TEXTDATA = null;
-
+            string MEAS = null;
+            string[,] results = new string[360, 12];
             try
             {
+                INST.IO = (IMessage)RM.Open(E5071C, AccessMode.NO_LOCK, 2000, "");
+                INST.IO.Timeout = 5000;
 
+                INST.IO.Clear();
+                INST.WriteString(":SENS1:FREQ:SPAN " + "0E6", true);
+                //INST.WriteString(":INIT1:CONT OFF");
+                System.Threading.Thread.Sleep(100);
 
-                for (int i = 1; i < 4; i++)
+                //ここまではあらかじめ設定しておくのがよい
+
+                DateTime dt = DateTime.Now;
+
+                for(int d = 0; d < 360; d++)
                 {
-
-                    string loop = i.ToString();
-
-                    INST.IO = (IMessage)RM.Open(E5071C, AccessMode.NO_LOCK, 2000, "");
-                    INST.IO.Timeout = 5000;
-
-                    INST.IO.Clear();
-                    INST.WriteString(":SENS1:FREQ:SPAN " + "0E6", true);
-
-                    switch (i)
+                    for (int i = 0; i < 3; i++)
                     {
-                        case 1:
-                            if (checkBox1.Checked == true)
-                            {
-                                System.Threading.Thread.Sleep(100);
-                                INST.WriteString(":SENS1:FREQ:CENT " + textBox_MK1.Text + "E6", true);
-                                INST.WriteString(":CALC1:MARK1:X " + textBox_MK1.Text + "E6", true);
-                                INST.WriteString(":CALC1:MARK1:Y?");
-                                ReadResults = INST.ReadString().Split(',');
-                                num = double.Parse(ReadResults[0], NumberStyles.Float);
-                                resultMK1 = num.ToString();
-                            }
 
-                            break;
+                        string loop = i.ToString();
 
-                        case 2:
-                            if (checkBox2.Checked == true)
-                            {
-                                System.Threading.Thread.Sleep(100);
-                                INST.WriteString(":SENS1:FREQ:CENT " + textBox_MK2.Text + "E6", true);
-                                INST.WriteString(":CALC1:MARK2:X " + textBox_MK2.Text + "E6", true);
-                                INST.WriteString(":CALC1:MARK2:Y?");
-                                ReadResults = INST.ReadString().Split(',');
-                                num = double.Parse(ReadResults[0], NumberStyles.Float);
-                                resultMK2 = num.ToString();
-                            }
+                        INST.IO.Clear();
 
-                            break;
+                        switch (i)
+                        {
+                            case 0:
+                                if (checkBox1.Checked == true)
+                                {
+                                    MEAS = textBox_MK1.Text;
+                                }
+                                else
+                                {
+                                    MEAS = null;
+                                }
 
-                        case 3:
-                            if (checkBox3.Checked == true)
-                            {
-                                System.Threading.Thread.Sleep(100);
-                                INST.WriteString(":SENS1:FREQ:CENT " + textBox_MK3.Text + "E6", true);
-                                INST.WriteString(":CALC1:MARK3:X " + textBox_MK3.Text + "E6", true);
-                                INST.WriteString(":CALC1:MARK3:Y?");
-                                ReadResults = INST.ReadString().Split(',');
-                                num = double.Parse(ReadResults[0], NumberStyles.Float);
-                                resultMK3 = num.ToString();
-                            }
+                                break;
 
-                            break;
+                            case 1:
+                                if (checkBox2.Checked == true)
+                                {
+                                    MEAS = textBox_MK2.Text;
+                                }
+                                else
+                                {
+                                    MEAS = null;
+                                }
+
+                                break;
+
+                            case 2:
+                                if (checkBox3.Checked == true)
+                                {
+                                    MEAS = textBox_MK3.Text;
+                                }
+                                else
+                                {
+                                    MEAS = null;
+                                }
+
+                                break;
+
+                            case 3:
+                                if (checkBox4.Checked == true)
+                                {
+                                    MEAS = textBox_MK4.Text;
+                                }
+                                else
+                                {
+                                    MEAS = null;
+                                }
+
+                                break;
+
+                            case 4:
+                                if (checkBox5.Checked == true)
+                                {
+                                    MEAS = textBox_MK5.Text;
+                                }
+                                else
+                                {
+                                    MEAS = null;
+                                }
+
+                                break;
+
+                            case 5:
+                                if (checkBox6.Checked == true)
+                                {
+                                    MEAS = textBox_MK6.Text;
+                                }
+                                else
+                                {
+                                    MEAS = null;
+                                }
+
+                                break;
+                        }
+
+                        if (MEAS != null)
+                        {
+                            INST.WriteString(":SENS1:FREQ:CENT " + MEAS + "E6");
+                            System.Threading.Thread.Sleep(100);
+                            INST.WriteString(":CALC1:MARK1:X " + "0" + "E6");
+                            //INST.WriteString(":INIT1");
 
 
+                            INST.WriteString(":CALC1:MARK1:Y?");
+
+                            ReadResults = INST.ReadString().Split(',');
+                            Console.WriteLine(ReadResults[0]);
+
+                            num = double.Parse(ReadResults[0], NumberStyles.Float);
+                            results[d,i * 2] = MEAS;
+                            results[d,i * 2 + 1] = num.ToString();
+                        }
 
                     }
-
                 }
+                
+
+                DateTime dte = DateTime.Now;
+                Console.WriteLine(dte - dt);
+
+                StreamWriter prow = new StreamWriter("C:\\TEST\\pattern.csv", true, Encoding.Default);
+                for(int g = 0; g < 360; g++)
+                {
+                    for (int k = 0; k < 12; k++)
+                    {
+                        if (k == 0)
+                        {
+                            TEXTDATA = results[g,k] + ",";
+                        }
+                        else
+                        {
+                            TEXTDATA = TEXTDATA + results[g,k] + ",";
+                        }
+
+                    }
+                    prow.WriteLine(TEXTDATA);
+                }
+                
+                
+                
+
+                
+
+                prow.Close();
             }
+
 
             catch
             {
@@ -1016,23 +1099,8 @@ namespace E5071C_Tool
             }
 
 
-            string[] results = { textBox_MK1.Text, resultMK1, textBox_MK2.Text, resultMK2, textBox_MK3.Text, resultMK3 };
+            
 
-            StreamWriter prow = new StreamWriter("C:\\TEST\\pattern.csv", true, Encoding.Default);
-            for (int k = 0; k < results.Length; k++)
-            {
-                if (k == 0)
-                {
-                    TEXTDATA = results[k] + ",";
-                }
-                else
-                {
-                    TEXTDATA = TEXTDATA + results[k] + ",";
-                }
-
-            }
-            prow.WriteLine(TEXTDATA);
-            prow.Close();
 
 
         }
