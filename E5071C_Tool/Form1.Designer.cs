@@ -67,8 +67,6 @@
             this.button_S1PDB = new System.Windows.Forms.Button();
             this.button_hold = new System.Windows.Forms.Button();
             this.button_S1PRI = new System.Windows.Forms.Button();
-            this.textBox_log = new System.Windows.Forms.TextBox();
-            this.button_store = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -464,7 +462,7 @@
             this.button_hold.Name = "button_hold";
             this.button_hold.Size = new System.Drawing.Size(75, 23);
             this.button_hold.TabIndex = 7;
-            this.button_hold.Text = "Hold";
+            this.button_hold.Text = "Trigger";
             this.button_hold.UseVisualStyleBackColor = true;
             this.button_hold.Click += new System.EventHandler(this.button_hold_Click);
             // 
@@ -478,31 +476,11 @@
             this.button_S1PRI.UseVisualStyleBackColor = true;
             this.button_S1PRI.Click += new System.EventHandler(this.button4_Click);
             // 
-            // textBox_log
-            // 
-            this.textBox_log.Location = new System.Drawing.Point(18, 154);
-            this.textBox_log.Name = "textBox_log";
-            this.textBox_log.Size = new System.Drawing.Size(100, 19);
-            this.textBox_log.TabIndex = 9;
-            this.textBox_log.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // button_store
-            // 
-            this.button_store.Location = new System.Drawing.Point(124, 154);
-            this.button_store.Name = "button_store";
-            this.button_store.Size = new System.Drawing.Size(75, 23);
-            this.button_store.TabIndex = 10;
-            this.button_store.Text = "button1";
-            this.button_store.UseVisualStyleBackColor = true;
-            this.button_store.Click += new System.EventHandler(this.button_store_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(553, 282);
-            this.Controls.Add(this.button_store);
-            this.Controls.Add(this.textBox_log);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.textBox_VISA);
@@ -565,9 +543,7 @@
         private System.Windows.Forms.Button button_S1PDB;
         private System.Windows.Forms.Button button_S1PRI;
         private System.Windows.Forms.Button button_hold;
-        private System.Windows.Forms.TextBox textBox_log;
         private System.Windows.Forms.CheckBox checkBox7;
-        private System.Windows.Forms.Button button_store;
     }
 }
 

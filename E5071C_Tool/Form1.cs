@@ -845,50 +845,30 @@ namespace E5071C_Tool
 
         private void button_hold_Click(object sender, EventArgs e)
         {
-            string TRIGON = ":INIT1:CONT ON";
-            string TRIGOFF = ":INIT1:CONT OFF";
-
-            bool FLG = false;
+            string CONTON = ":INIT1:CONT ON";
+            string CONTOFF = ":INIT1:CONT OFF";
+            string TRIGSTATE = ":INIT1:CONT?";
 
             try
             {
-
-
-                if (button_hold.Text == "Contiuous")
-                {
-
-                    button_hold.Text = "Hold";
-                    textBox_log.ResetText();
-                    FLG = true;
-                }
-                else if (button_hold.Text == "Hold")
-                {
-
-                    button_hold.Text = "Contiuous";
-                    FLG = false;
-                }
 
                 INST.IO = (IMessage)RM.Open(E5071C, AccessMode.NO_LOCK, 2000, "");
                 INST.IO.Timeout = 5000;
 
                 INST.IO.Clear();
-                if (FLG == true)
+                INST.WriteString(TRIGSTATE);
+                string state = INST.ReadString();
+
+
+                if (state.Contains("1"))
                 {
-                    INST.WriteString(TRIGON, true);
+                    button_hold.Text = "Hold";
+                    INST.WriteString(CONTOFF, true);
                 }
-                else
+                else if(state.Contains("0"))
                 {
-                    INST.WriteString(TRIGOFF, true);
-                }
-
-                if (FLG == false)
-                {
-                    INST.WriteString(":CALC1:MARK1:Y?");
-                    string[] ReadResults = INST.ReadString().Split(',');
-
-                    double num = double.Parse(ReadResults[0], NumberStyles.Float);
-
-                    textBox_log.Text = num.ToString();
+                    button_hold.Text = "Contiuous";
+                    INST.WriteString(CONTON, true);
                 }
 
             }
@@ -937,182 +917,6 @@ namespace E5071C_Tool
             }
         }
 
-        private void button_store_Click(object sender, EventArgs e)
-        {
-            string OPC;
-            string TEXTDATA = null;
-            string MEAS = null;
-            string[,] results = new string[360, 12];
-            try
-            {
-                INST.IO = (IMessage)RM.Open(E5071C, AccessMode.NO_LOCK, 2000, "");
-                INST.IO.Timeout = 5000;
-
-                INST.IO.Clear();
-                INST.WriteString(":SENS1:FREQ:SPAN " + "0E6");
-                INST.WriteString(":SENS1:SWE:POIN " + "2");
-
-                //INST.WriteString(":INIT1:CONT OFF");
-                
-
-                for(int o = 1; o < 8; o++)
-                {
-                    INST.WriteString(":CALC1:MARK" + o +  " OFF");
-                    System.Threading.Thread.Sleep(25);
-                }
-                
-
-                //ここまではあらかじめ設定しておくのがよい
-
-                DateTime dt = DateTime.Now;
-
-                for(int d = 0; d < 10; d++)
-                {
-                    for (int i = 0; i < 3; i++)
-                    {
-
-                        string loop = i.ToString();
-
-                        INST.IO.Clear();
-
-                        switch (i)
-                        {
-                            case 0:
-                                if (checkBox1.Checked == true)
-                                {
-                                    MEAS = textBox_MK1.Text;
-                                }
-                                else
-                                {
-                                    MEAS = null;
-                                }
-
-                                break;
-
-                            case 1:
-                                if (checkBox2.Checked == true)
-                                {
-                                    MEAS = textBox_MK2.Text;
-                                }
-                                else
-                                {
-                                    MEAS = null;
-                                }
-
-                                break;
-
-                            case 2:
-                                if (checkBox3.Checked == true)
-                                {
-                                    MEAS = textBox_MK3.Text;
-                                }
-                                else
-                                {
-                                    MEAS = null;
-                                }
-
-                                break;
-
-                            case 3:
-                                if (checkBox4.Checked == true)
-                                {
-                                    MEAS = textBox_MK4.Text;
-                                }
-                                else
-                                {
-                                    MEAS = null;
-                                }
-
-                                break;
-
-                            case 4:
-                                if (checkBox5.Checked == true)
-                                {
-                                    MEAS = textBox_MK5.Text;
-                                }
-                                else
-                                {
-                                    MEAS = null;
-                                }
-
-                                break;
-
-                            case 5:
-                                if (checkBox6.Checked == true)
-                                {
-                                    MEAS = textBox_MK6.Text;
-                                }
-                                else
-                                {
-                                    MEAS = null;
-                                }
-
-                                break;
-                        }
-
-                        if (MEAS != null)
-                        {
-                            INST.WriteString(":SENS1:FREQ:CENT " + MEAS + "E6");
-                            System.Threading.Thread.Sleep(80);
-                            //INST.WriteString(":CALC1:MARK1:X " + "0" + "E6");
-                            //INST.WriteString(":INIT1");
-
-
-                            INST.WriteString(":CALC1:MARK1:Y?");
-
-                            ReadResults = INST.ReadString().Split(',');
-                            Console.WriteLine(ReadResults[0]);
-
-                            num = double.Parse(ReadResults[0], NumberStyles.Float);
-                            results[d,i * 2] = MEAS;
-                            results[d,i * 2 + 1] = num.ToString();
-                        }
-
-                    }
-                }
-                
-
-                DateTime dte = DateTime.Now;
-                Console.WriteLine(dte - dt);
-
-                StreamWriter prow = new StreamWriter("C:\\TEST\\pattern.csv", true, Encoding.Default);
-                for(int g = 0; g < 10; g++)
-                {
-                    for (int k = 0; k < 12; k++)
-                    {
-                        if (k == 0)
-                        {
-                            TEXTDATA = results[g,k] + ",";
-                        }
-                        else
-                        {
-                            TEXTDATA = TEXTDATA + results[g,k] + ",";
-                        }
-
-                    }
-                    prow.WriteLine(TEXTDATA);
-                }
-                
-                
-                
-
-                
-
-                prow.Close();
-            }
-
-
-            catch
-            {
-
-            }
-
-
-            
-
-
-
-        }
 
     }
 
